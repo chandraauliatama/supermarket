@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Role;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Models\Product;
 use Filament\Forms;
@@ -11,6 +12,7 @@ use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class ProductResource extends Resource
 {
@@ -19,6 +21,26 @@ class ProductResource extends Resource
     protected static ?string $modelLabel = 'Produk';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()->role == Role::ADMIN;
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return auth()->user()->role == Role::ADMIN;
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return auth()->user()->role == Role::ADMIN;
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return auth()->user()->role == Role::ADMIN;
+    }
 
     public static function form(Form $form): Form
     {

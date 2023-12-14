@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\Role;
 use App\Filament\Resources\SaleResource\Pages;
 use App\Filament\Resources\SaleResource\RelationManagers;
 use App\Models\Product;
@@ -33,9 +34,24 @@ class SaleResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';
 
+    public static function canCreate(): bool
+    {
+        return auth()->user()->role == Role::KASIR;
+    }
+
     public static function canEdit(Model $record): bool
     {
-        return false;
+        return FALSE;
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return FALSE;
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return FALSE;
     }
 
     public static function form(Form $form): Form
