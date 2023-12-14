@@ -2,11 +2,11 @@
 
 namespace App\Enums;
 
-enum Role: int
+class Role
 {
-    case PIMPINAN = 1;
+    const PIMPINAN = 1;
 
-    case ADMIN = 2;
+    const ADMIN = 2;
 
-    case KASIR = 3;
+    const KASIR = 3;
 }

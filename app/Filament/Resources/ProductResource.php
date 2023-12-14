@@ -7,6 +7,7 @@ use App\Filament\Resources\ProductResource\Pages;
 use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
@@ -47,20 +48,22 @@ class ProductResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
-                    ->image(),
-                Forms\Components\TextInput::make('sell_price')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('capital_price')
-                    ->required()
-                    ->numeric(),
+                    ->label('Nama Produk')
+                    ->required()->maxLength(255),
                 Forms\Components\TextInput::make('stock')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
+                    ->label('Stok')
+                    ->required()->integer()->default(0),
+                Forms\Components\FileUpload::make('image')
+                    ->label('Gambar Produk')
+                    ->image()->columnSpanFull(),
+                Forms\Components\TextInput::make('sell_price')
+                    ->label('Harga Jual')
+                    ->reactive()->required()->integer()
+                    ->minValue(fn(Get $get) => (int) $get('capital_price')),
+                Forms\Components\TextInput::make('capital_price')
+                    ->label('Harga Modal')
+                    ->reactive()->required()->integer()->default(0),
+
             ]);
     }
 
