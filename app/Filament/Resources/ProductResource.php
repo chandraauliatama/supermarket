@@ -81,17 +81,17 @@ class ProductResource extends Resource
                         ->alignCenter()
                         ->width('full')
                         ->height(200),
-                    Tables\Columns\TextColumn::make('name')
+                    Tables\Columns\TextColumn::make('name')->label('Nama Produk')
                         ->weight(FontWeight::Bold)
                         ->size('md')
                         ->searchable(),
-                    Tables\Columns\TextColumn::make('sell_price')
+                    Tables\Columns\TextColumn::make('sell_price')->label('Harga Jual')
                         ->prefix('Harga Jual: Rp. ')->color('success')
                         ->numeric()->sortable(),
-                    Tables\Columns\TextColumn::make('capital_price')
+                    Tables\Columns\TextColumn::make('capital_price')->label('Harga Modal')
                         ->prefix('Harga Modal: Rp. ')->color('danger')
                         ->numeric()->sortable(),
-                    Tables\Columns\TextColumn::make('stock')
+                    Tables\Columns\TextColumn::make('stock')->label('Stok Produk')
                         ->prefix('Stok: ')
                         ->numeric()->sortable(),
                     Tables\Columns\TextColumn::make('updated_at')
