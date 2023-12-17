@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\LoginPage;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -24,9 +25,12 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
+            ->darkModeBrandLogo(asset('images/logoDark.gif'))
+            ->brandLogo(asset('images/logo.gif'))
+            ->brandLogoHeight('3rem')
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(LoginPage::class)
             ->colors([
                 'primary' => Color::Amber,
             ])
