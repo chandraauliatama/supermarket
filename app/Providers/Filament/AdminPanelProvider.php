@@ -11,6 +11,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
+use Illuminate\Contracts\View\View;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -30,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogoHeight('3rem')
             ->id('admin')
             ->path('admin')
-            ->login(LoginPage::class)
+            ->login()
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -56,6 +57,14 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->renderHook(
+                'panels::body.start',
+                fn (): View => view('filament.headerbg')
+            )
+            ->renderHook(
+                'panels::body.end',
+                fn (): View => view('filament.footerbg')
+            );
     }
 }
