@@ -12,7 +12,10 @@ use Filament\Resources\Resource;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Columns\Layout\Stack;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductResource extends Resource
@@ -70,6 +73,7 @@ class ProductResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->paginated([9, 21, 51, 102, 'all'])
             ->contentGrid([
                 'md' => 2,
                 'xl' => 3,
@@ -94,15 +98,29 @@ class ProductResource extends Resource
                     Tables\Columns\TextColumn::make('stock')->label('Stok Produk')
                         ->prefix('Stok: ')
                         ->numeric()->sortable(),
-                    Tables\Columns\TextColumn::make('updated_at')
+                    Tables\Columns\TextColumn::make('updated_at')->label('Terakhir Diubah')
                         ->prefix('Terakhir Diubah: ')
                         ->dateTime()->sortable()
-                        ->toggleable(isToggledHiddenByDefault: true),
                 ])->space(1.5),
             ])
             ->filters([
-                //
-            ])
+                SelectFilter::make('stok')
+                    ->options([
+                        1 => 'Stok Tersedia',
+                        2 => 'Stok Habis'
+                    ])
+                    ->query(function (Builder $query, $data) {
+                        return $query
+                            ->when(
+                                $data['value'] == 2,
+                                fn (Builder $query, $stok): Builder => $query->where('stock', 0),
+                            )
+                            ->when(
+                                $data['value'] == 1,
+                                fn (Builder $query, $stok): Builder => $query->whereNot('stock', 0),
+                            );
+                    })
+            ], layout: FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
