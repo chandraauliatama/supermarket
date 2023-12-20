@@ -73,6 +73,10 @@ class AdminPanelProvider extends PanelProvider
             ->renderHook(
                 'panels::body.end',
                 fn (): View => view('filament.footerbg')
+            )
+            ->renderHook(
+                'panels::head.end',
+                fn (): View => view('filament.addScript')
             );
     }
 }
