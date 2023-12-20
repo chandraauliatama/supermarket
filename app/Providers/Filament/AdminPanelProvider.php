@@ -3,6 +3,10 @@
 namespace App\Providers\Filament;
 
 use App\Filament\LoginPage;
+use App\Filament\Widgets\AnimationWidget;
+use App\Filament\Widgets\RoleWidget;
+use App\Filament\Widgets\SalesChart;
+use App\Filament\Widgets\StatsOverview;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -43,6 +47,10 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
+                RoleWidget::class,
+                StatsOverview::class,
+                SalesChart::class,
+                AnimationWidget::class
             ])
             ->middleware([
                 EncryptCookies::class,
