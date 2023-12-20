@@ -14,6 +14,9 @@ class ListProducts extends ListRecords
     {
         return [
             Actions\CreateAction::make()->label('Tambah Produk'),
+            Actions\Action::make('print')->label('Cetak Data Produk')
+                ->requiresConfirmation()
+                ->url(shouldOpenInNewTab: true, url: route('printProductsReport')),
         ];
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PrintController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('/admin/');
 });
+
+Route::get('/print-sales-report', [PrintController::class, 'printSalesReport'])->name('printSalesReport');
+Route::get('/print-products-report', [PrintController::class, 'printProductsReport'])->name('printProductsReport');
