@@ -2,8 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\LoginPage;
-use App\Filament\Widgets\AnimationWidget;
 use App\Filament\Widgets\RoleWidget;
 use App\Filament\Widgets\SalesChart;
 use App\Filament\Widgets\StatsOverview;
@@ -50,7 +48,6 @@ class AdminPanelProvider extends PanelProvider
                 RoleWidget::class,
                 StatsOverview::class,
                 SalesChart::class,
-                AnimationWidget::class
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -77,6 +74,10 @@ class AdminPanelProvider extends PanelProvider
             ->renderHook(
                 'panels::head.end',
                 fn (): View => view('filament.addScript')
+            )
+            ->renderHook(
+                'panels::footer',
+                fn (): View => view('filament.footerContent')
             );
     }
 }
