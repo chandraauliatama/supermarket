@@ -118,8 +118,9 @@ class SaleResource extends Resource
                 Tables\Columns\TextColumn::make('quantity')
                     ->numeric()->sortable(),
                 Tables\Columns\TextColumn::make('keuntungan')
+                    ->numeric()
                     ->prefix('Rp. ')
-                    ->getStateUsing(fn(Sale $record) => ($record->capital_price - $record->sale_price) * $record->quantity),
+                    ->getStateUsing(fn(Sale $record) => ($record->sell_price - $record->capital_price) * $record->quantity),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Waktu Transaksi')
                     ->dateTime()->sortable()
